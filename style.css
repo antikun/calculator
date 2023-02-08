@@ -30,6 +30,8 @@ body {
     width: 400px;
     height: 100px;
     outline: 1px solid black;
+    text-align: end;
+    font-size: 30px;
 }
 
 .display-current {
