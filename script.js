@@ -4,6 +4,7 @@ const mulBtn = document.querySelector("#multiply");
 const divideBtn = document.querySelector("#divide");
 const resetBtn = document.querySelector("#reset");
 const equalsBtn = document.querySelector("#equals");
+const percentBtn = document.querySelector("#percent");
 
 const numButtons = [];
 const inputs = {
@@ -17,7 +18,8 @@ for (let i = 0; i < 10; i++) {
     numButtons.push(document.querySelector(`#btn${i}`));
     numButtons[i].addEventListener("click", (e) => {
         e.preventDefault();
-        if (inputs.num === "0") {
+        if (inputs.num === "0"
+            || inputs.operator[inputs.operator.length - 1] === "=") {
             inputs.num = `${i}`;
         } else {
             inputs.num += `${i}`;
@@ -43,27 +45,30 @@ function makeCalculation(a, b, operator) {
 }
 
 function displayResult() {
-    const result = makeCalculation(inputs.numsArray[0], inputs.numsArray[1], inputs.operator[0]);
-    if (result == undefined) {
+    const result =
+        makeCalculation(inputs.numsArray[0], inputs.numsArray[1], inputs.operator[inputs.operator.length - 2]);
+    if (result === undefined) {
         return;
-    } else {
-        if (inputs.numsArray.length < 2) {
-            inputs.numsArray.push(result);
-        }
-        if (inputs.numsArray.length >= 2) {
-            inputs.numsArray.splice(0, 2);
-            inputs.numsArray.push(result);
-        }
-        inputs.display.textContent = result;
-    };
-}
+    }
+    if (inputs.numsArray.length < 2) {
+        inputs.numsArray.push(result);
+    }
+    if (inputs.numsArray.length >= 2) {
+        inputs.numsArray.splice(0, 2);
+        inputs.numsArray.push(result);
+    }
+    inputs.display.textContent = result;
+};
+
 
 function operate(symbol) {
+    inputs.operator.push(symbol.toString())
+    while (inputs.num === "") {
+        return
+    }
     inputs.numsArray.push(parseInt(inputs.num));
     inputs.num = "";
-    inputs.operator.push(symbol.toString())
     displayResult();
-    inputs.operator.unshift(symbol.toString());
 }
 
 function reset() {
@@ -73,16 +78,29 @@ function reset() {
     inputs.operator.splice(0, inputs.operator.length);
 }
 
+function convertToPercent() {
+    let newPercent = parseInt(inputs.display.textContent) / 100;
+    inputs.numsArray.push(newPercent);
+    inputs.display.textContent = newPercent;
+    console.log(newPercent);
+}
+
 plusBtn.addEventListener("click", () => operate("+"));
 minusBtn.addEventListener("click", () => operate("-"));
 mulBtn.addEventListener("click", () => operate("*"));
 divideBtn.addEventListener("click", () => operate("/"))
 
 resetBtn.addEventListener("click", reset);
+
 equalsBtn.addEventListener("click", () => {
+    if (inputs.num === "") {
+        return
+    }
     inputs.numsArray.push(parseInt(inputs.num));
+    inputs.operator.push("=");
     displayResult();
     inputs.num = inputs.display.textContent;
-    inputs.operator.splice(0, inputs.operator.length);
     inputs.numsArray.pop();
 })
+
+percentBtn.addEventListener("click", convertToPercent);
