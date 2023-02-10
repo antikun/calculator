@@ -46,27 +46,44 @@ function makeCalculation(a, b, operator) {
 
 function displayResult() {
     const result =
-        makeCalculation(inputs.numsArray[0], inputs.numsArray[1], inputs.operator[inputs.operator.length - 2]);
+        makeCalculation(inputs.numsArray[inputs.numsArray.length - 2],
+            inputs.numsArray[inputs.numsArray.length - 1],
+            inputs.operator[inputs.operator.length - 2]);
     if (result === undefined) {
         return;
     }
-    if (inputs.numsArray.length < 2) {
-        inputs.numsArray.push(result);
-    }
-    if (inputs.numsArray.length >= 2) {
-        inputs.numsArray.splice(0, 2);
-        inputs.numsArray.push(result);
-    }
+    inputs.numsArray.push(result);
     inputs.display.textContent = result;
-};
+}
 
+function displayPercent() {
+    inputs.display.textContent += "%";
+}
+
+function convertToPercent(num) {
+    let newPercent = num / 100;
+    inputs.numsArray.push(newPercent);
+}
+
+function calculatePercent(a, b) {
+    return a * b / 100
+}
 
 function operate(symbol) {
     inputs.operator.push(symbol.toString())
     while (inputs.num === "") {
         return
     }
-    inputs.numsArray.push(parseInt(inputs.num));
+    if (inputs.display.textContent.includes("%")) {
+        if (inputs.numsArray.length >= 1) {
+            const newNum =
+                calculatePercent(inputs.numsArray[inputs.numsArray.length - 1],
+                    parseInt(inputs.display.textContent));
+            inputs.numsArray.push(newNum);
+        } else {
+            convertToPercent(inputs.num);
+        }
+    } else { inputs.numsArray.push(parseInt(inputs.num)); }
     inputs.num = "";
     displayResult();
 }
@@ -76,13 +93,6 @@ function reset() {
     inputs.display.textContent = "0";
     inputs.num = "0";
     inputs.operator.splice(0, inputs.operator.length);
-}
-
-function convertToPercent() {
-    let newPercent = parseInt(inputs.display.textContent) / 100;
-    inputs.numsArray.push(newPercent);
-    inputs.display.textContent = newPercent;
-    console.log(newPercent);
 }
 
 plusBtn.addEventListener("click", () => operate("+"));
@@ -103,4 +113,4 @@ equalsBtn.addEventListener("click", () => {
     inputs.numsArray.pop();
 })
 
-percentBtn.addEventListener("click", convertToPercent);
+percentBtn.addEventListener("click", displayPercent);
