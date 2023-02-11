@@ -5,6 +5,7 @@ const divideBtn = document.querySelector("#divide");
 const resetBtn = document.querySelector("#reset");
 const equalsBtn = document.querySelector("#equals");
 const percentBtn = document.querySelector("#percent");
+const plusMinusBtn = document.querySelector("#plus-minus");
 
 const numButtons = [];
 const inputs = {
@@ -69,11 +70,7 @@ function calculatePercent(a, b) {
     return a * b / 100
 }
 
-function operate(symbol) {
-    inputs.operator.push(symbol.toString())
-    while (inputs.num === "") {
-        return
-    }
+function pushNewNum() {
     if (inputs.display.textContent.includes("%")) {
         if (inputs.numsArray.length >= 1) {
             const newNum =
@@ -84,12 +81,20 @@ function operate(symbol) {
             convertToPercent(inputs.num);
         }
     } else { inputs.numsArray.push(parseInt(inputs.num)); }
+}
+
+function operate(symbol) {
+    inputs.operator.push(symbol.toString())
+    while (inputs.num === "") {
+        return
+    }
+    pushNewNum();
     inputs.num = "";
     displayResult();
 }
 
 function reset() {
-    inputs.numsArray.splice(0, 2);
+    inputs.numsArray.length = 0;
     inputs.display.textContent = "0";
     inputs.num = "0";
     inputs.operator.splice(0, inputs.operator.length);
@@ -106,11 +111,21 @@ equalsBtn.addEventListener("click", () => {
     if (inputs.num === "") {
         return
     }
-    inputs.numsArray.push(parseInt(inputs.num));
     inputs.operator.push("=");
+    pushNewNum();
     displayResult();
     inputs.num = inputs.display.textContent;
     inputs.numsArray.pop();
 })
 
 percentBtn.addEventListener("click", displayPercent);
+plusMinusBtn.addEventListener("click", () => {
+    let displayNum = inputs.display.textContent;
+    if (displayNum > 0) {
+        displayNum = -Math.abs(displayNum)
+    } else if (displayNum < 0) {
+        displayNum = Math.abs(displayNum);
+    }
+    inputs.display.textContent = displayNum;
+    inputs.num = displayNum;
+});
