@@ -1,8 +1,9 @@
 @font-face {
-    font-family: "Digital Numbers Regular";
-    font-style: normal;
+    font-family: 'digital-7_monomono';
+    src: url('digital-7_mono-webfont.woff2') format('woff2'),
+        url('digital-7_mono-webfont.woff') format('woff');
     font-weight: normal;
-    src: local("Digital Numbers Regular"), url("DigitalNumbers-Regular.woff") format("woff");
+    font-style: normal;
 }
 
 @font-face {
@@ -13,6 +14,15 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'ds-digitalnormal';
+    src: url('ds-digi-webfont.woff2') format('woff2'),
+        url('ds-digi-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -20,7 +30,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #cfdbd5;
+    background-image: radial-gradient(at top left, #080708 30%, #322c32);
+    /* background-color: #efd3d7; */
 }
 
 .container {
@@ -54,10 +65,10 @@ body {
     align-items: center;
     justify-content: flex-end;
     width: 400px;
-    height: 90px;
-    font-family: 'Digital Numbers Regular', sans-serif;
+    height: 75px;
+    font-family: "ds-digitalnormal", sans-serif;
     text-align: end;
-    font-size: 55px;
+    font-size: 62px;
     background-color: #a2ad9c;
     border: 0.8rem inset #33393f;
     border-radius: 0.3rem;
@@ -74,16 +85,16 @@ body {
     margin: 0;
     position: relative;
     top: 20px;
-    left: 115px;
+    left: 113px;
     color: #bbc2c9;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 1rem;
     font-weight: 300;
 }
 
 .digits-wrapper {
     background-color: #bbc2c9;
-    padding: 2px 1px 0;
+    padding: 0 1px;
     border-radius: 2px;
     font-size: 0.6rem;
 }
@@ -91,7 +102,7 @@ body {
 
 .digits {
     margin-bottom: -2px;
-    margin-top: 0;
+    margin-top: -2px;
     color: #212529;
 }
 
@@ -108,7 +119,7 @@ body {
     color: #bbc2c9;
     font-family: "canonregular", sans-serif;
     position: relative;
-    right: 228px;
+    right: 224px;
 }
 
 .btns-container {
@@ -123,7 +134,8 @@ body {
     border-radius: 0.3rem;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
-    background-color: #373c42;
+    background-image: linear-gradient(145deg, #373c42 40%, #495058);
+    /* background-color: #373c42; */
 }
 
 .btns-container::before {
@@ -151,23 +163,32 @@ body {
 
 .btn {
     width: 80px;
-    height: 70px;
+    height: 50px;
+    padding: 0.5rem, 1.5rem;
     color: #f8f9fa;
     background-color: #2a2f34;
-    font-family: "Josefin Sans", sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-weight: 300;
-    font-size: 2.5rem;
+    font-size: 2rem;
     border-radius: 4px;
     border-top: 2px solid #525a62;
     border-left: 2px solid #525a62;
     border-right: 2px solid #1c1f22;
     border-bottom: 2px solid #1c1f22;
-    box-shadow: 3px 5px 2px rgba(19, 21, 23, 0.8)
+    box-shadow: 3px 5px 2px rgba(19, 21, 23, 0.8);
+    transition: transform 100ms ease
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn:active {
+    transform: scale(0.99);
 }
 
 .btn.nums {
     background-color: #101113;
-    font-size: 2rem;
     border-top: 2px solid #34373d;
     border-left: 2px solid #34373d;
     border-right: 2px solid #111112;
@@ -175,7 +196,7 @@ body {
 }
 
 .btn.percnt {
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 
 .btn.red {
