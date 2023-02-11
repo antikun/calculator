@@ -1,3 +1,20 @@
+@font-face {
+    font-family: "Digital Numbers Regular";
+    font-style: normal;
+    font-weight: normal;
+    src: local("Digital Numbers Regular"), url("DigitalNumbers-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: 'canonregular';
+    src: url('canon-webfont.woff2') format('woff2'),
+        url('canon-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
 body {
     margin: 0;
     padding: 0;
@@ -26,10 +43,11 @@ body {
     align-items: center;
 }
 
-.display-result {
+.display-result-container {
     width: 400px;
     height: 100px;
     outline: 1px solid black;
+    font-family: 'Digital Numbers Regular', sans-serif;
     text-align: end;
     font-size: 30px;
 }
