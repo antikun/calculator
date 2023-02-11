@@ -11,9 +11,7 @@
         url('canon-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
-
 
 body {
     margin: 0;
@@ -22,6 +20,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #cfdbd5;
 }
 
 .container {
@@ -29,38 +28,118 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    outline: 1px solid black;
     width: 500px;
     height: auto;
-    padding: 5rem 0 3rem;
+    background-color: #212529;
+    border-radius: 0.5rem;
+    border: 0.2rem solid rgba(51, 57, 63, 0.8);
 }
 
 .display-wrapper {
-    outline: 1px solid black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    outline: 1px solid #212529;
+    width: 100%;
+    height: auto;
+    padding: 1.5rem 0 1rem;
+    background-color: #212529;
+    border-top-left-radius: 0.3rem;
+    border-top-right-radius: 0.3rem;
 }
 
 .display-result-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     width: 400px;
-    height: 100px;
-    outline: 1px solid black;
+    height: 90px;
     font-family: 'Digital Numbers Regular', sans-serif;
     text-align: end;
-    font-size: 30px;
+    font-size: 55px;
+    background-color: #a2ad9c;
+    border: 0.8rem inset #33393f;
+    border-radius: 0.3rem;
 }
 
-.display-current {
-    align-self: flex-end;
-    width: 200px;
+.display-result {
+    margin: 0;
+    padding: 0;
+}
+
+.serial-num,
+.digits-wrapper {
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    top: 20px;
+    left: 115px;
+    color: #bbc2c9;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.digits-wrapper {
+    background-color: #bbc2c9;
+    padding: 2px 1px 0;
+    border-radius: 2px;
+    font-size: 0.6rem;
+}
+
+
+.digits {
+    margin-bottom: -2px;
+    margin-top: 0;
+    color: #212529;
+}
+
+.bg-digits {
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.serial-num::before {
+    display: inline;
+    content: "Anon";
+    font-size: 2rem;
+    color: #bbc2c9;
+    font-family: "canonregular", sans-serif;
+    position: relative;
+    right: 228px;
+}
+
+.btns-container {
+    width: 100%;
+    padding: 1.2rem 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(51, 57, 63, 0.3);
+    box-shadow: 0px -5px 2px #101214;
+    border-radius: 0.3rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: #373c42;
+}
+
+.btns-container::before {
+    display: block;
+    content: "";
+    width: 165px;
     height: 50px;
-    outline: 1px solid black;
+    background-color: #2c0f06;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    margin-left: 4rem;
+    border-radius: 0.2rem;
+    border: 0.2rem inset rgba(32, 11, 4, 0.5);
 }
 
 .btns-wrapper {
-    outline: 1px solid black;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -73,4 +152,38 @@ body {
 .btn {
     width: 80px;
     height: 70px;
+    color: #f8f9fa;
+    background-color: #2a2f34;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 300;
+    font-size: 2.5rem;
+    border-radius: 4px;
+    border-top: 2px solid #525a62;
+    border-left: 2px solid #525a62;
+    border-right: 2px solid #1c1f22;
+    border-bottom: 2px solid #1c1f22;
+    box-shadow: 3px 5px 2px rgba(19, 21, 23, 0.8)
+}
+
+.btn.nums {
+    background-color: #101113;
+    font-size: 2rem;
+    border-top: 2px solid #34373d;
+    border-left: 2px solid #34373d;
+    border-right: 2px solid #111112;
+    border-bottom: 2px solid #111112;
+}
+
+.btn.percnt {
+    font-size: 2rem;
+}
+
+.btn.red {
+    background-color: #810f1d;
+    font-size: 1.6rem;
+    font-weight: 400;
+    border-top: 2px solid #d91931;
+    border-left: 2px solid #d91931;
+    border-right: 2px solid #290509;
+    border-bottom: 2px solid #290509;
 }
