@@ -209,6 +209,10 @@ body {
     border-bottom: 2px solid #290509;
 }
 
+.highlighted {
+    color: #c7511d;
+}
+
 @media (max-width: 510px) {
     :root {
         font-size: 14px;

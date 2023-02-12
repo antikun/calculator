@@ -1,9 +1,22 @@
 // GLOBAL VARIABLES
+const operBtns = [
+    {
+        btn: document.querySelector("#add"),
+        symbol: "+"
+    },
+    {
+        btn: document.querySelector("#subtract"),
+        symbol: "-"
+    },
+    {
+        btn: document.querySelector("#multiply"),
+        symbol: "*"
+    },
+    {
+        btn: document.querySelector("#divide"),
+        symbol: "/"
+    }];
 
-const plusBtn = document.querySelector("#add");
-const minusBtn = document.querySelector("#subtract");
-const mulBtn = document.querySelector("#multiply");
-const divideBtn = document.querySelector("#divide");
 const resetBtn = document.querySelector("#reset");
 const equalsBtn = document.querySelector("#equals");
 const percentBtn = document.querySelector("#percent");
@@ -39,24 +52,29 @@ const inputs = {
     operator: []
 };
 
+function inputNumbers(index) {
+    if (inputs.num.length < 12
+        || inputs.display.textContent.includes("-")
+        && inputs.num.length < 13) {
+        if (inputs.num === "0"
+            || inputs.operator[inputs.operator.length - 1] === "="
+            && inputs.num !== "0.") {
+            inputs.num = `${index}`;
+        } else {
+            inputs.num += `${index}`;
+        }
+        inputs.display.textContent = inputs.num;
+    }
+}
+
 for (let i = 0; i < 10; i++) {
     numButtons.push(document.querySelector(`#btn${i}`));
     numButtons[i].addEventListener("click", (e) => {
         e.preventDefault();
-        if (inputs.num.length < 12
-            || inputs.display.textContent.includes("-")
-            && inputs.num.length < 13) {
-            if (inputs.num === "0"
-                || inputs.operator[inputs.operator.length - 1] === "="
-                && inputs.num !== "0.") {
-                inputs.num = `${i}`;
-            } else {
-                inputs.num += `${i}`;
-            }
-            inputs.display.textContent = inputs.num;
-        }
+        inputNumbers(i);
     });
 };
+
 
 function displayResult() {
     const result =
@@ -70,8 +88,12 @@ function displayResult() {
         inputs.display.textContent = result;
     } else {
         let rounded = Math.round(result * 10000000000) / 10000000000;
-        inputs.display.textContent = rounded;
-        inputs.numsArray.push(rounded);
+        if (rounded.toString().length > 12) {
+            inputs.display.textContent = `E ${rounded.toString().slice(0, 11)}`;
+        } else {
+            inputs.display.textContent = rounded;
+            inputs.numsArray.push(rounded);
+        }
     }
 };
 
@@ -101,8 +123,15 @@ function pushNewNum() {
     } else { inputs.numsArray.push(Number(inputs.num)); }
 };
 
+function removeHighlight() {
+    for (let i = 0; i < 4; i++) {
+        operBtns[i].btn.classList.remove("highlighted");
+    }
+}
+
 function operate(symbol) {
-    while (inputs.display.textContent === "ERR") {
+    removeHighlight();
+    while (inputs.display.textContent.includes("E")) {
         inputs.num = "";
         return;
     }
@@ -120,22 +149,10 @@ function reset() {
     inputs.display.textContent = "0";
     inputs.num = "0";
     inputs.operator.splice(0, inputs.operator.length);
+    removeHighlight();
 };
 
-
-// EVENT LISTENERS
-
-plusBtn.addEventListener("click", () => operate("+"));
-
-minusBtn.addEventListener("click", () => operate("-"));
-
-mulBtn.addEventListener("click", () => operate("*"));
-
-divideBtn.addEventListener("click", () => operate("/"))
-
-resetBtn.addEventListener("click", reset);
-
-equalsBtn.addEventListener("click", () => {
+function equals() {
     if (inputs.num === "") {
         return
     }
@@ -143,7 +160,38 @@ equalsBtn.addEventListener("click", () => {
     pushNewNum();
     displayResult();
     inputs.num = inputs.display.textContent;
-})
+    removeHighlight();
+}
+
+function clearLastChar() {
+    inputs.num = inputs.num.slice(0, inputs.num.length - 1);
+    inputs.display.textContent = inputs.num;
+}
+
+function addDecimalPoint() {
+    if (inputs.display.textContent.includes(".")) { return };
+    if (inputs.operator[inputs.operator.length - 1] === "="
+        || inputs.display.textContent === "") {
+        inputs.display.textContent = "0."
+    } else {
+        inputs.display.textContent += ".";
+    }
+    inputs.num = inputs.display.textContent;
+}
+
+// OTHER EVENT LISTENERS
+
+for (let i = 0; i < operBtns.length; i++) {
+    operBtns[i].btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        operate(operBtns[i].symbol);
+        operBtns[i].btn.classList.add("highlighted");
+    })
+}
+
+resetBtn.addEventListener("click", reset);
+
+equalsBtn.addEventListener("click", equals)
 
 percentBtn.addEventListener("click", displayPercent);
 
@@ -158,18 +206,24 @@ plusMinusBtn.addEventListener("click", () => {
     inputs.num = displayNum.toString();
 });
 
-decimalPointBtn.addEventListener("click", () => {
-    if (inputs.display.textContent.includes(".")) { return };
-    if (inputs.operator[inputs.operator.length - 1] === "="
-        || inputs.display.textContent === "") {
-        inputs.display.textContent = "0."
-    } else {
-        inputs.display.textContent += ".";
-    }
-    inputs.num = inputs.display.textContent;
-});
+decimalPointBtn.addEventListener("click", addDecimalPoint);
 
-backSpace.addEventListener("click", () => {
-    inputs.num = inputs.num.slice(0, inputs.num.length - 1);
-    inputs.display.textContent = inputs.num;
+backSpace.addEventListener("click", clearLastChar);
+
+// KEYBOARD SUPPORT
+
+document.addEventListener("keydown", (e) => {
+    const numKey = document.querySelector(`button[data-num-key="${e.key}"]`);
+    const operKey = document.querySelector(`button[data-oper-key="${e.key}"]`);
+    const randKey = document.querySelector(`button[data-rand-key="${e.key}"]`)
+    if (!numKey && !operKey && !randKey && !e.key === "Enter") return;
+    if (operKey) { operate(e.key) };
+    if (numKey) { inputNumbers(numKey.textContent); }
+    if (randKey || e.key === "Enter") {
+        if (e.key === "Enter" || e.key === "=") { equals() };
+        if (e.key === "Escape") { reset() };
+        if (e.key === "Backspace") { clearLastChar() };
+        if (e.key === ".") { addDecimalPoint() };
+        if (e.key === "%") { displayPercent() };
+    }
 });
