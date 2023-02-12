@@ -1,26 +1,17 @@
 @font-face {
-    font-family: 'digital-7_monomono';
-    src: url('digital-7_mono-webfont.woff2') format('woff2'),
-        url('digital-7_mono-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
     font-family: 'canonregular';
-    src: url('canon-webfont.woff2') format('woff2'),
-        url('canon-webfont.woff') format('woff');
+    src: url('./fonts/anon-webfont.woff2') format('woff2'),
+        url('./fonts/canon-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'ds-digitalnormal';
-    src: url('ds-digi-webfont.woff2') format('woff2'),
-        url('ds-digi-webfont.woff') format('woff');
+    src: url('./fonts/ds-digi-webfont.woff2') format('woff2'),
+        url('./fonts/ds-digi-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-
 }
 
 body {
@@ -115,12 +106,12 @@ body {
 
 .serial-num::before {
     display: inline;
-    content: "Anon";
+    content: "Anti";
     font-size: 2rem;
     color: #bbc2c9;
     font-family: "canonregular", sans-serif;
     position: relative;
-    right: 14rem;
+    right: 14.3rem;
 }
 
 .btns-container {
