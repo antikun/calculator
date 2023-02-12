@@ -19,7 +19,7 @@ function subtract(a, b) { return a - b; };
 
 function multiply(a, b) { return a * b; };
 
-function divide(a, b) { return a / b; };
+function divide(a, b) { return (b === 0) ? "ERR" : a / b; };
 
 function makeCalculation(a, b, operator) {
     if (b == undefined || operator === undefined) return;
@@ -43,15 +43,19 @@ for (let i = 0; i < 10; i++) {
     numButtons.push(document.querySelector(`#btn${i}`));
     numButtons[i].addEventListener("click", (e) => {
         e.preventDefault();
-        if (inputs.num === "0"
-            || inputs.operator[inputs.operator.length - 1] === "="
-            && inputs.num !== "0.") {
-            inputs.num = `${i}`;
-        } else {
-            inputs.num += `${i}`;
+        if (inputs.num.length < 12
+            || inputs.display.textContent.includes("-")
+            && inputs.num.length < 13) {
+            if (inputs.num === "0"
+                || inputs.operator[inputs.operator.length - 1] === "="
+                && inputs.num !== "0.") {
+                inputs.num = `${i}`;
+            } else {
+                inputs.num += `${i}`;
+            }
+            inputs.display.textContent = inputs.num;
         }
-        inputs.display.textContent = inputs.num;
-    })
+    });
 };
 
 function displayResult() {
@@ -62,8 +66,13 @@ function displayResult() {
     if (result === undefined) {
         return;
     }
-    inputs.numsArray.push(result);
-    inputs.display.textContent = result;
+    if (result === "ERR") {
+        inputs.display.textContent = result;
+    } else {
+        let rounded = Math.round(result * 10000000000) / 10000000000;
+        inputs.display.textContent = rounded;
+        inputs.numsArray.push(rounded);
+    }
 };
 
 function displayPercent() {
@@ -76,13 +85,12 @@ function convertToPercent(num) {
 };
 
 function calculatePercent(a, b) {
-    return a * b / 100
+    return a * b / 100;
 };
 
 function pushNewNum() {
     if (inputs.display.textContent.includes("%")) {
         if (inputs.numsArray.length >= 1) {
-            console.log(inputs.num)
             const newNum =
                 calculatePercent(inputs.numsArray[inputs.numsArray.length - 1],
                     (inputs.num));
@@ -94,9 +102,13 @@ function pushNewNum() {
 };
 
 function operate(symbol) {
+    while (inputs.display.textContent === "ERR") {
+        inputs.num = "";
+        return;
+    }
     inputs.operator.push(symbol.toString())
     while (inputs.num === "") {
-        return
+        return;
     }
     pushNewNum();
     inputs.num = "";
@@ -143,12 +155,13 @@ plusMinusBtn.addEventListener("click", () => {
         displayNum = Math.abs(displayNum);
     }
     inputs.display.textContent = displayNum;
-    inputs.num = displayNum;
+    inputs.num = displayNum.toString();
 });
 
 decimalPointBtn.addEventListener("click", () => {
     if (inputs.display.textContent.includes(".")) { return };
-    if (inputs.operator[inputs.operator.length - 1] === "=") {
+    if (inputs.operator[inputs.operator.length - 1] === "="
+        || inputs.display.textContent === "") {
         inputs.display.textContent = "0."
     } else {
         inputs.display.textContent += ".";
