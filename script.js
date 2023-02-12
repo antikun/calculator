@@ -98,6 +98,7 @@ function displayResult() {
 };
 
 function displayPercent() {
+    if (inputs.display.textContent.includes("%")) { return }
     inputs.display.textContent += "%";
 };
 
@@ -225,7 +226,12 @@ document.addEventListener("keydown", (e) => {
     if (!numKey && !operKey && !randKey && !e.key === "Enter") return;
     if (operKey) {
         toggleFadeInOut();
-        operate(e.key)
+        operate(e.key);
+        for (let i = 0; i < operBtns.length; i++) {
+            if (e.key === operBtns[i].symbol) {
+                operBtns[i].btn.classList.add("highlighted");
+            }
+        }
     };
     if (numKey) { inputNumbers(numKey.textContent); }
     if (randKey || e.key === "Enter") {
