@@ -213,6 +213,42 @@ body {
     color: #c7511d;
 }
 
+.fade-in-out {
+    animation: fade-in-out 100ms linear 1 forwards;
+}
+
+.fade-in-out-again {
+    animation: fade-in-out-again 100ms linear 1 forwards;
+}
+
+@keyframes fade-in-out {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-out-again {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 @media (max-width: 510px) {
     :root {
         font-size: 14px;

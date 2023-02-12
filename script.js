@@ -179,11 +179,17 @@ function addDecimalPoint() {
     inputs.num = inputs.display.textContent;
 }
 
+function toggleFadeInOut() {
+    inputs.display.classList.toggle("fade-in-out");
+    inputs.display.classList.toggle("fade-in-out-again");
+}
+
 // OTHER EVENT LISTENERS
 
 for (let i = 0; i < operBtns.length; i++) {
     operBtns[i].btn.addEventListener("click", (e) => {
         e.preventDefault();
+        toggleFadeInOut();
         operate(operBtns[i].symbol);
         operBtns[i].btn.classList.add("highlighted");
     })
@@ -217,7 +223,10 @@ document.addEventListener("keydown", (e) => {
     const operKey = document.querySelector(`button[data-oper-key="${e.key}"]`);
     const randKey = document.querySelector(`button[data-rand-key="${e.key}"]`)
     if (!numKey && !operKey && !randKey && !e.key === "Enter") return;
-    if (operKey) { operate(e.key) };
+    if (operKey) {
+        toggleFadeInOut();
+        operate(e.key)
+    };
     if (numKey) { inputNumbers(numKey.textContent); }
     if (randKey || e.key === "Enter") {
         if (e.key === "Enter" || e.key === "=") { equals() };
