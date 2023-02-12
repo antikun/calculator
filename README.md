@@ -29,7 +29,7 @@ Being the last project in the Fundamentals part of the Odin Project, this was ai
 * Got more comfortable at using **object literals** and **arrays**, while trying to keep the global scope as clean as possible.
 * Learned how to add **keyboard support** using the correct event listeners.
 * Got better(quicker) at **refactoring** the code.
-* Improved my understanding of **CSS pseudo classes**.
+* Improved my understanding of **CSS pseudo elements**.
 
 ### Things to improve
 * Add more features - like chaining operations that follow order of precedence, using parentheses, etc.
