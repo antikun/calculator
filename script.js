@@ -52,14 +52,22 @@ const inputs = {
     operator: []
 };
 
+function removeEquals() {
+    if (inputs.operator[inputs.operator.length - 1] === "=") {
+        inputs.operator.pop();
+    }
+}
+
 function inputNumbers(index) {
     if (inputs.num.length < 12
         || inputs.display.textContent.includes("-")
         && inputs.num.length < 13) {
         if (inputs.num === "0"
             || inputs.operator[inputs.operator.length - 1] === "="
-            && inputs.num !== "0.") {
+            && inputs.num !== "0."
+            && inputs.backspace == true) {
             inputs.num = `${index}`;
+            removeEquals();
         } else {
             inputs.num += `${index}`;
         }
@@ -102,10 +110,7 @@ function displayPercent() {
     inputs.display.textContent += "%";
 };
 
-function convertToPercent(num) {
-    let newPercent = num / 100;
-    inputs.numsArray.push(newPercent);
-};
+function convertToPercent(num) { return num / 100 };
 
 function calculatePercent(a, b) {
     return a * b / 100;
@@ -116,10 +121,10 @@ function pushNewNum() {
         if (inputs.numsArray.length >= 1) {
             const newNum =
                 calculatePercent(inputs.numsArray[inputs.numsArray.length - 1],
-                    (inputs.num));
+                    (parseFloat(inputs.num)));
             inputs.numsArray.push(Number(newNum));
         } else {
-            convertToPercent(inputs.num);
+            inputs.numsArray.push(convertToPercent(inputs.num));
         }
     } else { inputs.numsArray.push(Number(inputs.num)); }
 };
@@ -157,6 +162,11 @@ function equals() {
     if (inputs.num === "") {
         return
     }
+    if (inputs.display.textContent.includes("%")
+        && inputs.numsArray.length < 1) {
+        let converted = convertToPercent(inputs.num);
+        inputs.display.textContent = converted;
+    }
     inputs.operator.push("=");
     pushNewNum();
     displayResult();
@@ -165,8 +175,10 @@ function equals() {
 }
 
 function clearLastChar() {
-    inputs.num = inputs.num.slice(0, inputs.num.length - 1);
-    inputs.display.textContent = inputs.num;
+    let displayedNum = inputs.display.textContent;
+    let sliced = displayedNum.slice(0, displayedNum.length - 1);
+    inputs.display.textContent = sliced;
+    inputs.num = sliced;
 }
 
 function addDecimalPoint() {

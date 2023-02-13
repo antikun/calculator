@@ -8,7 +8,7 @@ The calculator **evaluates only one single pair of numbers at a time**.
 
 You can use it either by clicking on the buttons or by typing on your keyboard.
 
-I was trying to recrate the look of a **Canon AS-120** calculator I have lying around at home.
+I was trying to recreate the look of a **Canon AS-120** calculator I have lying around at home.
 It mimics the Canon calculator "behavior" - the displayed numbers "blink" when you hit an operator key, it returns "E" when the result's more than 12 digits, etc.
 Since the display only shows the current number and not the operators I decided to add a little highlight feature to the relative operator buttons so as to make it clearer what the user's last choice was.
 
