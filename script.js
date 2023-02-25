@@ -53,12 +53,6 @@ const inputs = {
     backspace: false
 };
 
-function removeEquals() {
-    if (inputs.operator[inputs.operator.length - 1] === "=") {
-        inputs.operator.pop();
-    }
-}
-
 function inputNumbers(index) {
     if (inputs.num.length < 12
         || inputs.display.textContent.includes("-")
