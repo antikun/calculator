@@ -49,7 +49,8 @@ const inputs = {
     num: "0",
     display: document.querySelector(".display-result"),
     numsArray: [],
-    operator: []
+    operator: [],
+    backspace: false
 };
 
 function removeEquals() {
@@ -65,9 +66,8 @@ function inputNumbers(index) {
         if (inputs.num === "0"
             || inputs.operator[inputs.operator.length - 1] === "="
             && inputs.num !== "0."
-            && inputs.backspace == true) {
+            && inputs.backspace === false) {
             inputs.num = `${index}`;
-            removeEquals();
         } else {
             inputs.num += `${index}`;
         }
@@ -136,6 +136,7 @@ function removeHighlight() {
 }
 
 function operate(symbol) {
+    inputs.backspace = false;
     removeHighlight();
     while (inputs.display.textContent.includes("E")) {
         inputs.num = "";
@@ -175,6 +176,7 @@ function equals() {
 }
 
 function clearLastChar() {
+    inputs.backspace = true;
     let displayedNum = inputs.display.textContent;
     let sliced = displayedNum.slice(0, displayedNum.length - 1);
     inputs.display.textContent = sliced;
